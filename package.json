@@ -1,0 +1,17 @@
+{
+  "name": "birthdaybot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "HimeEnthusiast",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "discord.js": "^11.5.1",
+    "discord.js-commando": "^0.10.0"
+  },
+  "devDependencies": {},
+  "description": "A discord bot to keep track of user's birthdays."
+}
