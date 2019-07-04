@@ -12,6 +12,12 @@ class SetChannel extends commando.Command {
         });
     }
 
+    /*
+
+    what i wanted to do was get the user to enter a channel name, check if it exists then set it as the messaging channel but i can't figure out how to get *just* the channel names from the map. it's big complicated. so i had to do it by checking what channel the command was used in and replacing whatever name is in the json file with it. i dont think it's necessarily bad but i would prefer to make it so the commands could be done all in one place. just feels best to me?
+
+    */
+
     async run(message, args) {
         var messageContent = message.content.split(' ')[1]; //Saves message without command
 

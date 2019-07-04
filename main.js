@@ -12,18 +12,22 @@ bot.registry.registerCommandsIn(__dirname + "/commands");
 //log in
 bot.login('NTc4MjE3ODc0NDAxOTE4OTc2.XPGzUg.vsYCIKSOPfwBkAuZ1tjO0kMzk6w');
 
-//set activity
+//set activity. probably getting rid of!
 bot.on('ready', () => {
     console.log("Ready!");
     bot.user.setActivity('Have a good day :)');
 });
 
-  ////////////////////////////
- //Check JSON file for date//
-////////////////////////////
-//Move to new file? pass through: bot, channelname, fs?
+/*
+
+Move to new file so this can be replaced with a function. Pass through: bot, channelname, fs?
+ 
+*/
+
+//Checking JSON files for date. 
 bot.on('ready', () => {
-    var checkTime = new Date("06-07-2019 00:00:00");
+    //Time that message is sent would be put into
+    var checkTime = new Date();
     var timeUntil = checkTime.getTime() - new Date().getTime();
 
     
@@ -48,7 +52,7 @@ bot.on('ready', () => {
             } else { //If the file can be read, the command will continue
                 user = JSON.parse(data);
 
-                //read json file to find default channel
+                //read json file to find default channel.
                 generalChannel = user.defChannel.name;
                 
                 for(var x in user.defChannel.birthday) {
@@ -57,6 +61,12 @@ bot.on('ready', () => {
                     //dm everyone to tell them that it's someone's birthday
                     if (getFormatDate(fullDate) == user.defChannel.birthday[x].day) {
                         generalChannel.send("Happy birthday, " + "<@" + user.defChannel.birthday[x].user + ">" + "! I hope it's great.");
+
+                        /*
+
+                        In the same check, loop throught the watchlist. Then, check is the birthday user's id matches the watchlist user id. Either have bot say happy birthday personally or just not DM them.
+
+                        */
 
                     }
                 }
