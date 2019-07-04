@@ -33,6 +33,9 @@ class SetChannel extends commando.Command {
                     console.log("You're an admin!");
 
                     user.defChannel.name = message.channel.name;
+                    //server = server name
+                    user.defChannel.server = message.guild.name;
+
 
                     fs.writeFile('./date.json', JSON.stringify(user), 'utf-8', function(err) {
                         if (err) {
