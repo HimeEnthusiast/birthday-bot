@@ -1,6 +1,5 @@
 const commando = require('discord.js-commando');
 const fs = require('fs');
-var user;
 
 class ViewDate extends commando.Command {
     constructor(client) {
@@ -13,28 +12,34 @@ class ViewDate extends commando.Command {
     }
 
     async run(message, args) {
-
-        fs.readFile('./date.json', 'utf-8', function(err, data) {
+        fs.readFile('./JSON/date.json', 'utf-8', function(err, data) {
             if (err) {
                 message.channel.send("Sorry, I'm having some trouble! Can you make sure I'm okay?");
                 console.log(err);
 
-            } else { //If the file can be read, the command will continue
-                user = JSON.parse(data);
+            } else {
+                let user = JSON.parse(data);
+                let check = false;
+                let index;
 
-                for(var x in user.defChannel.birthday) {
-                    if(message.author.id == user.defChannel.birthday[x].user) {
-                        message.channel.send("Your birthday is: " + user.defChannel.birthday[x].day + ". If this is incorrect, you can delete it and try again.");
+                if (user.defChannel.birthday != null) {
+                    for (let x in user.defChannel.birthday) {
+                        index = x;
+                        if (message.author.id == user.defChannel.birthday[x].user) {
+                            check = true;
+                            break;
+                        }
+                    }
+
+                    if (check == true) {
+                        message.channel.send("Your birthday is: " + user.defChannel.birthday[index].day + ". If this is incorrect, you can delete it and try again.");
                     } else {
-                        message.channel.send("You don't seem to have a birthday set! Please register your birthday.");
-                        break;
+                        message.channel.send("You don't seem to have a birthday registered!");
                     }
                 }
-
             }    
         });
-    }
-    
+    } 
 }
 
 module.exports = ViewDate;

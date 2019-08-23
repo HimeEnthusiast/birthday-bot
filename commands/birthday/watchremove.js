@@ -1,6 +1,5 @@
 const commando = require('discord.js-commando');
 const fs = require('fs');
-var watchlist;
 
 class WatchRemove extends commando.Command {
     constructor(client) {
@@ -13,23 +12,20 @@ class WatchRemove extends commando.Command {
     }
 
     async run(message, args) {
-
-        fs.readFile('./watchlist.json', 'utf-8', function(err, data) {
+        fs.readFile('./JSON/watchlist.json', 'utf-8', function(err, data) {
             if (err) {
                 message.channel.send("Sorry, I'm having some trouble! Can you make sure I'm okay?");
                 console.log(err);
 
-            } else { //If the file can be read, the command will continue
-                watchlist = JSON.parse(data);
-                console.log("the loop should start now");
+            } else {
+                let watchlist = JSON.parse(data);
 
-                for(var x in watchlist.watch) {
+                for(let x in watchlist.watch) {
+                    //If the user matches an entry in the JSON file, their entry will be removed.
                     if(message.author.id == watchlist.watch[x].user) {
-                        delete watchlist.watch[x].user;
-                        console.log(watchlist.watch[x].user);
+                        watchlist.watch.splice(x, 1);
 
-                        //Write to the file
-                        fs.writeFile('./watchlist.json', JSON.stringify(watchlist), 'utf-8', function(err) {
+                        fs.writeFile('./JSON/watchlist.json', JSON.stringify(watchlist), 'utf-8', function(err) {
                             if (err) {
                                 console.log(err);
 
@@ -37,17 +33,15 @@ class WatchRemove extends commando.Command {
                                 message.channel.send("You have been removed from the watch list.");
                             }
                         });
+
                     } else {
                         message.channel.send("You don't seem to be on the watch list!");
                         break;
                     }
                 }
-
-
             }    
         });
     }
-    
 }
 
 module.exports = WatchRemove;
