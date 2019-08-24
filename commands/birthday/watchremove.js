@@ -19,25 +19,35 @@ class WatchRemove extends commando.Command {
 
             } else {
                 let watchlist = JSON.parse(data);
+                let check = false;
+                let index;
 
-                for(let x in watchlist.watch) {
-                    //If the user matches an entry in the JSON file, their entry will be removed.
-                    if(message.author.id == watchlist.watch[x].user) {
-                        watchlist.watch.splice(x, 1);
+                if (watchlist.watch != null) {
+                    for (let x in watchlist.watch) {
+                        index = x;
 
-                        fs.writeFile('./JSON/watchlist.json', JSON.stringify(watchlist), 'utf-8', function(err) {
-                            if (err) {
-                                console.log(err);
-
-                            } else {
-                                message.channel.send("You have been removed from the watch list.");
-                            }
-                        });
-
-                    } else {
-                        message.channel.send("You don't seem to be on the watch list!");
-                        break;
+                        if (message.author.id == watchlist.watch[x].user) {
+                            check = true;
+                            break;
+                        }
                     }
+                } else {
+                    message.channel.send("You aren't in the watchlist!");
+                }
+
+                if (check == true) {
+                    watchlist.watch.splice(index, 1);
+
+                    fs.writeFile('./JSON/watchlist.json', JSON.stringify(watchlist), function(err, data) {
+                        if (err) {
+                            console.log(err);
+
+                        } else {
+                            message.channel.send("You have been removed from the DM list!");
+                        }
+                    });
+                } else {
+                    message.channel.send("You aren't in the watchlist!");
                 }
             }    
         });

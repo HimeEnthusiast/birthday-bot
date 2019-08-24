@@ -22,7 +22,7 @@ class SaveBirthDay extends commando.Command {
 
             } else {
                 user = JSON.parse(data);
-                let dateReg = new RegExp(/\d{1,2}-\d{1,2}-\d{4}/gm);
+                let dateReg = new RegExp(/\d{1,2}-\d{1,2}$/);
 
                 if (messageContent != null && messageContent != undefined && messageContent != '') {
                     if (messageContent.match(dateReg)) {
@@ -46,7 +46,7 @@ class SaveBirthDay extends commando.Command {
                             });
                         
                             //Write to the file
-                            fs.writeFile('./JSON/date.json', JSON.stringify(user), 'utf-8', function(err) {
+                            fs.writeFile('./JSON/watchlist.json', JSON.stringify(watchlist), 'utf-8', function(err) {
                                 if (err) {
                                     console.log(err);
                         
@@ -56,10 +56,10 @@ class SaveBirthDay extends commando.Command {
                             });
                         }
                     } else {
-                        message.channel.send("Your message isn't in the correct format, please use MM-DD-YYYY.");
+                        message.channel.send("Your message isn't in the correct format, please use MM-DD.");
                     }
                 } else {
-                    message.channel.send("Your message is empty, please enter a date in MM-DD-YYYY format.");
+                    message.channel.send("Your message is empty, please enter a date in MM-DD format.");
                 }
             }
         });
