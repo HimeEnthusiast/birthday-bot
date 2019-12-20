@@ -4,6 +4,7 @@ const bot = new commando.Client();
 const schedule = require('node-schedule');
 const fs = require('fs');
 const send = require("./Functions/sendFunction.js");
+require('dotenv').config();
 
 //Command folders
 bot.registry.registerGroup('birthday', 'Birthday');
@@ -11,7 +12,7 @@ bot.registry.registerDefaults();
 bot.registry.registerCommandsIn(__dirname + "/commands");
 
 //log in
-bot.login('NTc4MjE3ODc0NDAxOTE4OTc2.XPGzUg.vsYCIKSOPfwBkAuZ1tjO0kMzk6w');
+bot.login(process.env.BOT_KEY);
 
 bot.on('ready', () => {
     console.log("Ready!");
