@@ -1,6 +1,10 @@
 const commando = require('discord.js-commando');
 const fs = require('fs');
 
+let logger = fs.createWriteStream('errorlog.txt', {
+    flags: 'a'
+});
+
 class SetChannel extends commando.Command {
     constructor(client) {
         super(client, {
@@ -16,8 +20,9 @@ class SetChannel extends commando.Command {
 
         fs.readFile('./JSON/date.json', 'utf-8', function(err, data) {
             if (err) {
-                message.channel.send("Sorry, I'm having some trouble! Can you make sure I'm okay?");
-                console.log(err);
+                message.channel.send("Fatal error! Please check error log.");
+                logger.write("\n" + new Date() + " " + err);
+
 
             } else {
                 let user = JSON.parse(data);
@@ -28,7 +33,8 @@ class SetChannel extends commando.Command {
 
                     fs.writeFile('./JSON/date.json', JSON.stringify(user), 'utf-8', function(err) {
                         if (err) {
-                            console.log(err);
+                            message.channel.send("Fatal error! Please check error log.");
+                            logger.write("\n" + new Date() + " " + err);
     
                         } else {
                             message.channel.send(message.channel.name + " is now the announcment channel.");

@@ -1,6 +1,10 @@
 const commando = require('discord.js-commando');
 const fs = require('fs');
 
+let logger = fs.createWriteStream('errorlog.txt', {
+    flags: 'a'
+});
+
 class WatchRemove extends commando.Command {
     constructor(client) {
         super(client, {
@@ -14,8 +18,8 @@ class WatchRemove extends commando.Command {
     async run(message, args) {
         fs.readFile('./JSON/watchlist.json', 'utf-8', function(err, data) {
             if (err) {
-                message.channel.send("Sorry, I'm having some trouble! Can you make sure I'm okay?");
-                console.log(err);
+                message.channel.send("Fatal error! Please check error log.");
+                logger.write("\n" + new Date() + " " + err);
 
             } else {
                 let watchlist = JSON.parse(data);
@@ -40,7 +44,8 @@ class WatchRemove extends commando.Command {
 
                     fs.writeFile('./JSON/watchlist.json', JSON.stringify(watchlist), function(err, data) {
                         if (err) {
-                            console.log(err);
+                            message.channel.send("Fatal error! Please check error log.");
+                            logger.write("\n" + new Date() + " " + err);
 
                         } else {
                             message.channel.send("You have been removed from the DM list!");

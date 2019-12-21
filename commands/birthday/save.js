@@ -1,6 +1,10 @@
 const commando = require('discord.js-commando');
 const fs = require('fs');
 
+let logger = fs.createWriteStream('errorlog.txt', {
+    flags: 'a'
+});
+
 class SaveBirthDay extends commando.Command {
     constructor(client) {
         super(client, {
@@ -17,8 +21,8 @@ class SaveBirthDay extends commando.Command {
 
         fs.readFile('./JSON/date.json', 'utf-8', function(err, data) {
             if (err) {
-                message.channel.send("Sorry, I'm experiencing an error!");
-                console.log(err);
+                message.channel.send("Fatal error! Please check error log.");
+                logger.write("\n" + new Date() + " " + err);
 
             } else {
                 user = JSON.parse(data);
@@ -48,7 +52,7 @@ class SaveBirthDay extends commando.Command {
                             //Write to the file
                             fs.writeFile('./JSON/watchlist.json', JSON.stringify(watchlist), 'utf-8', function(err) {
                                 if (err) {
-                                    console.log(err);
+                                    logger.write("\n" + new Date() + " " + err);
                         
                                 } else {
                                     message.channel.send("Your birthday has been successfully recorded!");

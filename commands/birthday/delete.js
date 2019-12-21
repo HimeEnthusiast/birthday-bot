@@ -1,6 +1,10 @@
 const commando = require('discord.js-commando');
 const fs = require('fs');
 
+let logger = fs.createWriteStream('errorlog.txt', {
+    flags: 'a'
+});
+
 class DeleteDate extends commando.Command {
     constructor(client) {
         super(client, {
@@ -10,13 +14,13 @@ class DeleteDate extends commando.Command {
             description: "Allows the user to delete their saved birth date so they me enter a new one or opt out of a birthday wish."
         });
     }
-    
+
     async run(message, args) {
 
-        fs.readFile('./JSON/date.json', 'utf-8', function(err, data) {
+        fs.readFile('./JSON/date.json', 'utf-8', function (err, data) {
             if (err) {
-                message.channel.send("Sorry, I'm having some trouble! Can you make sure I'm okay?");
-                console.log(err);
+                message.channel.send("Fatal error! Please check error log.");
+                logger.write("\n" + new Date() + " " + err);
 
             } else { //If the file can be read, the command will continue
                 let user = JSON.parse(data);
@@ -37,10 +41,10 @@ class DeleteDate extends commando.Command {
                 if (check == true) {
                     user.defChannel.birthday.splice(index, 1);
 
-                    fs.writeFile('./JSON/date.json', JSON.stringify(user), 'utf-8', function(err) {
+                    fs.writeFile('./JSON/date.json', JSON.stringify(user), 'utf-8', function (err) {
                         if (err) {
-                            console.log(err);
-                
+                            logger.write("\n" + new Date() + " " + err);
+
                         } else {
                             message.channel.send("Your birthday has been deleted!");
                         }
@@ -48,7 +52,7 @@ class DeleteDate extends commando.Command {
                 } else {
                     message.channel.send("You don't seem to have a birthday registered!");
                 }
-            }    
+            }
         });
     }
 }
