@@ -2,8 +2,13 @@
   "name": "birthdaybot",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.4.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
   },
   "author": "HimeEnthusiast",
   "license": "ISC",
