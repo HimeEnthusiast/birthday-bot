@@ -2,7 +2,8 @@ function sendMessage(fs, bot, schedule) {
     //Get time from JSON file
     fs.readFile('./JSON/date.json', 'utf-8', function(err, data) {
         if (err) {
-            console.log(err);
+            message.channel.send("Fatal error! Please check error log.");
+            logger.write("\n" + new Date() + " " + err);
 
         } else {
             let user = JSON.parse(data);
@@ -25,10 +26,10 @@ function sendMessage(fs, bot, schedule) {
 
                 for(let x in user.defChannel.birthday) {
                     if (getFormatDate(fullDate) == user.defChannel.birthday[x].day) {
-                        fs.readFile('./JSON/images.json', 'utf-8', function(err, data) {
+                        fs.readFile('./JSON/images.json', 'utf-8', function(err, data) { //IMAGES
                             if (err) {
-                                message.channel.send("Sorry, I'm having some trouble! Can you make sure I'm okay?");
-                                console.log(err);
+                                message.channel.send("Fatal error! Please check error log.");
+                                logger.write("\n" + new Date() + " " + err);
 
                             } else {
                                 //Get a random number from 0 to max # of images in the JSON file. Use that number as the index when sending the message.
@@ -40,10 +41,10 @@ function sendMessage(fs, bot, schedule) {
                         });
 
                         //Checking who signed up for the DM watchlist.
-                        fs.readFile('./JSON/watchlist.json', 'utf-8', function(err, data) {
+                        fs.readFile('BirthdayBot\JSON\watchlist.json', 'utf-8', function(err, data) { //WATCHLIST
                             if (err) {
-                                message.channel.send("Sorry, I'm having some trouble! Can you make sure I'm okay?");
-                                console.log(err);
+                                message.channel.send("Fatal error! Please check error log.");
+                                logger.write("\n" + new Date() + " " + err);
 
                             } else {
                                 let watch = JSON.parse(data);
