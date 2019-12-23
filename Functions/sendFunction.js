@@ -3,7 +3,7 @@ function sendMessage(fs, bot, schedule) {
 
     //The time seemed to not want to change in the program without restarting? I'm not sure how to do that so I removed the functionality.
     //It will send messages at 8am, this is in 24 hour time
-    let send = schedule.scheduleJob({ hour: 16, minute: 30}, function () {
+    let send = schedule.scheduleJob({ hour: 16, minute: 33}, function () {
         let fullDate = new Date();
 
         //Formatting the date as it's recorded in the JSON file, to check date
