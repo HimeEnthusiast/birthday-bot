@@ -41,7 +41,7 @@ function sendMessage(fs, bot, schedule) {
                         });
 
                         //Checking who signed up for the DM watchlist.
-                        fs.readFile('BirthdayBot\JSON\watchlist.json', 'utf-8', function(err, data) { //WATCHLIST
+                        fs.readFile('./JSON/watchlist.json', 'utf-8', function(err, data) { //WATCHLIST
                             if (err) {
                                 message.channel.send("Fatal error! Please check error log.");
                                 logger.write("\n" + new Date() + " " + err);

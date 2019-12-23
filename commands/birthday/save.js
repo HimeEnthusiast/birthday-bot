@@ -50,7 +50,7 @@ class SaveBirthDay extends commando.Command {
                             });
                         
                             //Write to the file
-                            fs.writeFile('./JSON/watchlist.json', JSON.stringify(watchlist), 'utf-8', function(err) {
+                            fs.writeFile('./JSON/date.json', JSON.stringify(user), 'utf-8', function(err) { 
                                 if (err) {
                                     logger.write("\n" + new Date() + " " + err);
                         
