@@ -1,7 +1,1 @@
-{
-    "defChannel": {
-        "server": "Bot Testing Facility",
-        "name": "general",
-        "birthday": []
-    }
-}
+{"defChannel":{"server":"Bot Testing Facility","name":"general","birthday":[{"user":"379876110869069824","name":"HimeEnthusiast","day":"12-23"}]}}
